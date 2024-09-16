@@ -40,7 +40,7 @@ const registerUser = async (req, res) => {
     res.cookie("token", token, {
       sameSite: "None",
       httpOnly: true,
-      secure: process.env.ENVIRONMENT === "development" ? false : true,
+      secure: true,
       maxAge: 1 * 60 * 60 * 1000,
     });
     res.json({
@@ -82,7 +82,7 @@ const loginUser = async (req, res) => {
     res.cookie("token", token, {
       sameSite: "None",
       httpOnly: true,
-      secure: process.env.ENVIRONMENT === "development" ? false : true,
+      secure: true,
       maxAge: 1 * 60 * 60 * 1000,
     }); // Pass the token as cookie
     res.status(201).json({ success: true, message: "User logged in" });
@@ -96,7 +96,7 @@ const logoutUser = async (req, res) => {
     res.clearCookie("token", {
       sameSite: "None",
       httpOnly: true,
-      secure: process.env.ENVIRONMENT === "development" ? false : true,
+      secure: true,
       maxAge: 1 * 60 * 60 * 1000,
     });
     res.json({ success: true, message: "User logged out" });
