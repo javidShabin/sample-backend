@@ -15,7 +15,7 @@ app.use(function (req, res, next) {
 app.use(
   cors({
     credentials: true,
-    origin: "https://sample-frontend-mu.vercel.app", // Replace with your frontend URL
+    origin: "https://sample-frontend-mu.vercel.app/", // Replace with your frontend URL
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
