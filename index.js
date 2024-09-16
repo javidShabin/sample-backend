@@ -7,6 +7,11 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const port = 5000;
 
+app.use(function (req, res, next) {
+  req.setTimeout(5000); // Set request timeout to 5 seconds (5000 ms)
+  next();
+});
+
 app.use(
   cors({
     credentials: true,
