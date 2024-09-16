@@ -9,7 +9,7 @@ const port = 5000;
 
 app.use(cors({
     credentials: true,
-    origin: true
+    origin: "https://sample-frontend-mu.vercel.app"
 }));
 app.use(express.json());
 app.use(cookieParser())
