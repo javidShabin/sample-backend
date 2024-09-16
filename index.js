@@ -22,14 +22,16 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// database connection
+dbconnection();
+
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
 app.use("/api", apiRouter);
 
-// database connection
-dbconnection();
+
 
 // Created server
 app.listen(port, () => {
