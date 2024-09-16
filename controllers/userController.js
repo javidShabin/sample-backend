@@ -21,12 +21,12 @@ const registerUser = async (req, res) => {
     if (isUserExist) {
       return res.status(409).json({ message: "User already exists" });
     }
-    
+
     // User password hashing
     const saltRounds = 10;
     const hashedPassword = bcrypt.hashSync(rest.password, saltRounds);
     // Create new user and save in database
-    const newUser = new User({ email, ...rest, password: hashedPassword, });
+    const newUser = new User({ email, ...rest, password: hashedPassword });
     await newUser.save();
     if (newUser) {
       return res.status(201).json("New user created");
@@ -38,6 +38,7 @@ const registerUser = async (req, res) => {
     }); // Generate token
     // Pass token as cookie the token will expire in one hour
     res.cookie("token", token, {
+      sameSite: "None",
       httpOnly: true,
       secure: process.env.ENVIRONMENT === "development" ? false : true,
       maxAge: 1 * 60 * 60 * 1000,
@@ -79,6 +80,7 @@ const loginUser = async (req, res) => {
     const token = generateToken(isUserExist._id);
 
     res.cookie("token", token, {
+      sameSite: "None",
       httpOnly: true,
       secure: process.env.ENVIRONMENT === "development" ? false : true,
       maxAge: 1 * 60 * 60 * 1000,
@@ -91,7 +93,12 @@ const loginUser = async (req, res) => {
 // User logout
 const logoutUser = async (req, res) => {
   try {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      sameSite: "None",
+      httpOnly: true,
+      secure: process.env.ENVIRONMENT === "development" ? false : true,
+      maxAge: 1 * 60 * 60 * 1000,
+    });
     res.json({ success: true, message: "User logged out" });
   } catch (error) {
     res.json({ error });
@@ -126,8 +133,15 @@ const getUserProfile = async (req, res) => {
     console.log(user);
     // find user with email
     const userData = await User.findOne({ _id: user.id });
-    const {image, name, email, phone} = userData
-    res.json({ success: true, message: "User profile", image, name, email, phone });
+    const { image, name, email, phone } = userData;
+    res.json({
+      success: true,
+      message: "User profile",
+      image,
+      name,
+      email,
+      phone,
+    });
   } catch (error) {}
 };
 // Update profile
