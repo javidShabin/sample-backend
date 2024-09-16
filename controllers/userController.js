@@ -41,7 +41,6 @@ const registerUser = async (req, res) => {
       sameSite: "None",
       httpOnly: true,
       secure: true,
-      maxAge: 1 * 60 * 60 * 1000,
     });
     res.json({
       success: true,
@@ -83,7 +82,6 @@ const loginUser = async (req, res) => {
       sameSite: "None",
       httpOnly: true,
       secure: true,
-      maxAge: 1 * 60 * 60 * 1000,
     }); // Pass the token as cookie
     res.status(201).json({ success: true, message: "User logged in" });
   } catch (error) {
@@ -97,7 +95,6 @@ const logoutUser = async (req, res) => {
       sameSite: "None",
       httpOnly: true,
       secure: true,
-      maxAge: 1 * 60 * 60 * 1000,
     });
     res.json({ success: true, message: "User logged out" });
   } catch (error) {
